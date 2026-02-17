@@ -1,0 +1,12 @@
+<% if (locals.success) { %>
+  <div style="
+    background: rgba(76,175,80,0.15); border: 1px solid rgba(76,175,80,0.3);
+    color: #81c784; padding: .65rem 1rem; font-size: .85rem; margin-bottom: 1.25rem;
+  "><%= success %></div>
+<% } %>
+<% if (locals.error) { %>
+  <div style="
+    background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.4);
+    color: #f5a5a5; padding: .65rem 1rem; font-size: .85rem; margin-bottom: 1.25rem;
+  "><%= error %></div>
+<% } %>

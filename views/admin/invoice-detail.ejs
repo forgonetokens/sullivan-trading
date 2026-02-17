@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/admin-head') %>
+  <title><%= invoice.invoice_number %> — Sullivan Trading Admin</title>
+</head>
+<body>
+  <%- include('../partials/admin-nav') %>
+  <div class="admin-wrap">
+    <%- include('../partials/admin-flash') %>
+
+    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: .5rem;">
+      <a href="/admin/invoices" style="color: var(--fog); text-decoration: none; font-size: .85rem;">&larr; Invoices</a>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+      <div>
+        <h1 class="page-title" style="margin-bottom: .25rem;"><%= invoice.invoice_number %></h1>
+        <span class="badge badge-<%= invoice.status %>" style="font-size: .75rem;"><%= invoice.status %></span>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-family: 'Oswald', sans-serif; font-size: 2rem; font-weight: 700; color: var(--gold);">
+          $<%= (invoice.total_cents / 100).toFixed(2) %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer Info -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <div class="section-label" style="margin-bottom: .75rem;">Customer</div>
+      <div style="font-size: .95rem; color: var(--cream);"><%= invoice.customer_name %></div>
+      <% if (invoice.customer_email) { %>
+        <div style="font-family: 'Source Code Pro', monospace; font-size: .8rem; color: var(--fog); margin-top: .25rem;"><%= invoice.customer_email %></div>
+      <% } %>
+    </div>
+
+    <!-- Line Items -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <div class="section-label" style="margin-bottom: .75rem;">Line Items</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th style="text-align: right;">Qty</th>
+              <th style="text-align: right;">Unit Price</th>
+              <th style="text-align: right;">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% invoice.line_items.forEach(item => { %>
+              <tr>
+                <td><%= item.description %></td>
+                <td style="text-align: right; font-family: 'Source Code Pro', monospace;"><%= item.quantity %></td>
+                <td style="text-align: right; font-family: 'Source Code Pro', monospace;">$<%= (item.unit_price_cents / 100).toFixed(2) %></td>
+                <td style="text-align: right; font-family: 'Source Code Pro', monospace;">$<%= ((item.quantity * item.unit_price_cents) / 100).toFixed(2) %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" style="text-align: right; font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--cream);">Total</td>
+              <td style="text-align: right; font-family: 'Oswald', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--gold);">$<%= (invoice.total_cents / 100).toFixed(2) %></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <% if (invoice.notes) { %>
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="section-label" style="margin-bottom: .5rem;">Notes</div>
+        <p style="font-size: .9rem; color: var(--cream-dim);"><%= invoice.notes %></p>
+      </div>
+    <% } %>
+
+    <!-- Payment Link -->
+    <% if (invoice.stripe_payment_link_url) { %>
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="section-label" style="margin-bottom: .75rem;">Payment Link</div>
+        <div class="payment-link-box">
+          <input type="text" id="paymentLinkUrl" value="<%= invoice.stripe_payment_link_url %>" readonly>
+          <button class="copy-btn" onclick="copyPaymentLink(this)">Copy Link</button>
+        </div>
+        <p style="margin-top: .5rem; font-size: .75rem; color: var(--fog);">Send this link to your customer for payment via Stripe.</p>
+      </div>
+    <% } %>
+
+    <!-- Timeline -->
+    <div class="card">
+      <div class="section-label" style="margin-bottom: .75rem;">Timeline</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-date"><%= invoice.created_at %></div>
+          <div class="tl-text">Invoice created</div>
+        </div>
+        <% if (invoice.sent_at) { %>
+          <div class="timeline-item">
+            <div class="tl-date"><%= invoice.sent_at %></div>
+            <div class="tl-text">Payment link generated &amp; marked pending</div>
+          </div>
+        <% } %>
+        <% if (invoice.paid_at) { %>
+          <div class="timeline-item">
+            <div class="tl-date"><%= invoice.paid_at %></div>
+            <div class="tl-text">Payment received</div>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function copyPaymentLink(btn) {
+      const input = document.getElementById('paymentLinkUrl');
+      navigator.clipboard.writeText(input.value).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy Link';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

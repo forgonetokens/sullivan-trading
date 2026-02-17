@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/admin-head') %>
+  <title>Invoices — Sullivan Trading Admin</title>
+</head>
+<body>
+  <%- include('../partials/admin-nav') %>
+  <div class="admin-wrap">
+    <%- include('../partials/admin-flash') %>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+      <h1 class="page-title" style="margin-bottom: 0;">Invoices</h1>
+      <a href="/admin/invoices/new" class="btn btn-gold btn-sm">+ New Invoice</a>
+    </div>
+
+    <!-- Search -->
+    <form method="GET" action="/admin/invoices" class="search-bar">
+      <input type="text" name="search" placeholder="Search by customer or invoice #..." value="<%= locals.search || '' %>">
+      <button type="submit">Search</button>
+    </form>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <a href="/admin/invoices" class="filter-tab <%= !locals.status || status === 'all' ? 'active' : '' %>">All</a>
+      <a href="/admin/invoices?status=pending" class="filter-tab <%= locals.status === 'pending' ? 'active' : '' %>">Pending</a>
+      <a href="/admin/invoices?status=paid" class="filter-tab <%= locals.status === 'paid' ? 'active' : '' %>">Paid</a>
+      <a href="/admin/invoices?status=overdue" class="filter-tab <%= locals.status === 'overdue' ? 'active' : '' %>">Overdue</a>
+      <a href="/admin/invoices?status=draft" class="filter-tab <%= locals.status === 'draft' ? 'active' : '' %>">Draft</a>
+    </div>
+
+    <!-- Invoice Table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Invoice #</th>
+            <th>Customer</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Payment Link</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (invoices.length === 0) { %>
+            <tr><td colspan="7" style="text-align: center; color: var(--fog); padding: 2rem;">No invoices found.</td></tr>
+          <% } else { %>
+            <% invoices.forEach(inv => { %>
+              <tr>
+                <td style="font-family: 'Source Code Pro', monospace; font-size: .8rem;"><%= inv.invoice_number %></td>
+                <td><%= inv.customer_name %></td>
+                <td style="font-family: 'Source Code Pro', monospace;">$<%= (inv.total_cents / 100).toFixed(2) %></td>
+                <td><span class="badge badge-<%= inv.status %>"><%= inv.status %></span></td>
+                <td style="font-family: 'Source Code Pro', monospace; font-size: .75rem; color: var(--fog);"><%= inv.created_at.split('T')[0] || inv.created_at.split(' ')[0] %></td>
+                <td>
+                  <% if (inv.stripe_payment_link_url) { %>
+                    <button class="copy-btn" onclick="copyLink(this, '<%= inv.stripe_payment_link_url %>')">Copy Link</button>
+                  <% } else { %>
+                    <span style="color: var(--fog); font-size: .75rem;">—</span>
+                  <% } %>
+                </td>
+                <td><a href="/admin/invoices/<%= inv.id %>" class="btn btn-outline btn-sm">View</a></td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function copyLink(btn, url) {
+      navigator.clipboard.writeText(url).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy Link';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

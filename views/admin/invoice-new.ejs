@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/admin-head') %>
+  <title>New Invoice — Sullivan Trading Admin</title>
+</head>
+<body>
+  <%- include('../partials/admin-nav') %>
+  <div class="admin-wrap">
+    <%- include('../partials/admin-flash') %>
+
+    <h1 class="page-title">Create Invoice</h1>
+
+    <form method="POST" action="/admin/invoices" id="invoiceForm">
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="section-label" style="margin-bottom: 1rem;">Customer Information</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customer_name">Customer Name *</label>
+            <input type="text" id="customer_name" name="customer_name" required>
+          </div>
+          <div class="form-group">
+            <label for="customer_email">Customer Email</label>
+            <input type="email" id="customer_email" name="customer_email">
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="section-label" style="margin-bottom: 1rem;">Line Items</div>
+        <div id="lineItems">
+          <div class="line-item" style="display: grid; grid-template-columns: 1fr 80px 120px 40px; gap: .5rem; align-items: end; margin-bottom: .75rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label>Description *</label>
+              <input type="text" name="description[]" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label>Qty</label>
+              <input type="number" name="quantity[]" value="1" min="1" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label>Unit Price ($)</label>
+              <input type="number" name="unit_price[]" step="0.01" min="0" required>
+            </div>
+            <div></div>
+          </div>
+        </div>
+        <button type="button" id="addLine" class="btn btn-outline btn-sm" style="margin-top: .5rem;">+ Add Line</button>
+        <div style="text-align: right; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--rule-solid);">
+          <span style="font-family: 'Source Code Pro', monospace; font-size: .7rem; text-transform: uppercase; letter-spacing: .15em; color: var(--fog);">Total: </span>
+          <span id="totalDisplay" style="font-family: 'Oswald', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--gold);">$0.00</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="notes">Notes</label>
+          <textarea id="notes" name="notes" placeholder="Optional notes for this invoice..."></textarea>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <button type="submit" class="btn btn-gold">Create & Generate Payment Link</button>
+        <a href="/admin/invoices" style="color: var(--fog); font-size: .85rem;">Cancel</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const lineItems = document.getElementById('lineItems');
+    const addLineBtn = document.getElementById('addLine');
+    const totalDisplay = document.getElementById('totalDisplay');
+
+    function createLineItem() {
+      const div = document.createElement('div');
+      div.className = 'line-item';
+      div.style.cssText = 'display: grid; grid-template-columns: 1fr 80px 120px 40px; gap: .5rem; align-items: end; margin-bottom: .75rem;';
+      div.innerHTML = `
+        <div class="form-group" style="margin-bottom: 0;">
+          <input type="text" name="description[]" required placeholder="Description">
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <input type="number" name="quantity[]" value="1" min="1" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <input type="number" name="unit_price[]" step="0.01" min="0" required>
+        </div>
+        <button type="button" onclick="removeLine(this)" style="
+          background: none; border: 1px solid var(--rule-solid); color: var(--red);
+          cursor: pointer; font-size: .9rem; padding: .5rem; line-height: 1;
+          transition: border-color .2s;
+        ">&times;</button>
+      `;
+      lineItems.appendChild(div);
+      updateTotal();
+    }
+
+    function removeLine(btn) {
+      const items = lineItems.querySelectorAll('.line-item');
+      if (items.length > 1) {
+        btn.closest('.line-item').remove();
+        updateTotal();
+      }
+    }
+
+    function updateTotal() {
+      let total = 0;
+      const qtys = document.querySelectorAll('input[name="quantity[]"]');
+      const prices = document.querySelectorAll('input[name="unit_price[]"]');
+      qtys.forEach((q, i) => {
+        const qty = parseFloat(q.value) || 0;
+        const price = parseFloat(prices[i].value) || 0;
+        total += qty * price;
+      });
+      totalDisplay.textContent = '$' + total.toFixed(2);
+    }
+
+    addLineBtn.addEventListener('click', createLineItem);
+    lineItems.addEventListener('input', updateTotal);
+  </script>
+</body>
+</html>

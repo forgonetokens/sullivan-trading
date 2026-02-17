@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sullivan Trading Company — Can Seamer Sales, Parts & Repairs</title>
+  <meta name="description" content="Sullivan Trading Company specializes in can seamer sales, rebuilds, parts, and repairs. American Can, Continental, Angelus, Dixie, and Rooney seamers. 20+ years experience.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Stencil+One&family=Oswald:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --navy:#0f1a2e;
+      --navy-light:#162240;
+      --navy-mid:#1c2d4f;
+      --slate:#2a3a5c;
+      --gold:#c9a84c;
+      --gold-dim:#a68a3a;
+      --gold-bright:#e2c465;
+      --cream:#e8dcc8;
+      --cream-dim:#bfb49e;
+      --fog:#7a899e;
+      --rule:rgba(201,168,76,0.2);
+      --rule-solid:#3a4a6c;
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Libre Baskerville','Georgia',serif;
+      background:var(--navy);
+      color:var(--cream);
+      line-height:1.7;
+    }
+
+    /* ── subtle grain overlay on whole page ── */
+    body::after{
+      content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+      opacity:0.035;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-size:200px 200px;
+    }
+
+    /* ── NAV ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(15,26,46,0.95);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--rule-solid);
+      padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;
+    }
+    .nav-logo{
+      font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;
+      color:var(--gold);text-decoration:none;letter-spacing:.15em;text-transform:uppercase;
+    }
+    .nav-links{display:flex;gap:1.75rem;list-style:none}
+    .nav-links a{
+      color:var(--fog);text-decoration:none;
+      font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:500;
+      letter-spacing:.1em;text-transform:uppercase;transition:color .2s;
+    }
+    .nav-links a:hover{color:var(--gold)}
+    .nav-phone{
+      font-family:'Source Code Pro',monospace;color:var(--gold);font-weight:600;font-size:.85rem;text-decoration:none;
+    }
+
+    /* ── HERO ── */
+    .hero{
+      min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:6rem 2rem 4rem;position:relative;
+      background:
+        radial-gradient(ellipse at 50% 30%, var(--navy-light) 0%, var(--navy) 70%);
+    }
+    /* subtle cross-hatch pattern */
+    .hero::before{
+      content:'';position:absolute;inset:0;pointer-events:none;
+      opacity:0.04;
+      background-image:
+        repeating-linear-gradient(45deg,transparent,transparent 10px,var(--cream) 10px,var(--cream) 10.5px),
+        repeating-linear-gradient(-45deg,transparent,transparent 10px,var(--cream) 10px,var(--cream) 10.5px);
+    }
+    .hero-logo{width:160px;margin-bottom:1.5rem;opacity:.85}
+    .hero-est{
+      font-family:'Source Code Pro',monospace;font-size:.7rem;font-weight:500;
+      letter-spacing:.4em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:1.5rem;
+    }
+    .hero h1{
+      font-family:'Oswald',sans-serif;font-size:clamp(3rem,9vw,7rem);
+      font-weight:700;color:var(--cream);line-height:.9;
+      letter-spacing:.06em;text-transform:uppercase;
+    }
+    .hero h1 span{
+      display:block;
+      font-family:'Libre Baskerville',serif;font-style:italic;
+      font-size:clamp(1.2rem,3vw,2rem);font-weight:400;
+      color:var(--gold);letter-spacing:.02em;text-transform:none;
+      margin-top:.5rem;
+    }
+    .hero-rule{
+      width:80px;height:1px;background:var(--gold-dim);margin:2rem auto;
+    }
+    .hero-tagline{
+      font-family:'Libre Baskerville',serif;font-style:italic;
+      font-size:1rem;color:var(--fog);max-width:480px;line-height:1.6;
+    }
+    .hero-quote{
+      font-family:'Libre Baskerville',serif;font-style:italic;
+      font-size:.95rem;color:var(--gold-dim);margin-top:2rem;
+      padding:1rem 2rem;border:1px solid var(--rule);
+    }
+    .hero-cta{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+    .btn{
+      display:inline-block;padding:.85rem 2.25rem;
+      font-family:'Oswald',sans-serif;font-weight:600;font-size:.85rem;
+      letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
+      border:none;cursor:pointer;transition:all .25s;
+    }
+    .btn-gold{background:var(--gold);color:var(--navy)}
+    .btn-gold:hover{background:var(--gold-bright)}
+    .btn-outline{background:transparent;color:var(--cream-dim);border:1.5px solid var(--slate)}
+    .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+    /* ── SECTIONS ── */
+    section{padding:5rem 2rem}
+    .container{max-width:960px;margin:0 auto}
+    .section-label{
+      font-family:'Source Code Pro',monospace;font-size:.7rem;font-weight:500;
+      text-transform:uppercase;letter-spacing:.3em;color:var(--gold-dim);margin-bottom:.5rem;
+    }
+    .section-title{
+      font-family:'Oswald',sans-serif;font-size:clamp(2rem,5vw,3.25rem);
+      font-weight:700;color:var(--cream);line-height:1.05;letter-spacing:.04em;
+      text-transform:uppercase;margin-bottom:.75rem;
+    }
+    .section-intro{
+      font-size:1rem;color:var(--fog);max-width:580px;line-height:1.7;font-style:italic;
+    }
+    .sec-alt{background:var(--navy-light)}
+
+    /* gold divider between sections */
+    .gold-rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);margin:0 auto;max-width:200px}
+
+    /* ── MACHINES ── */
+    .machine-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:1.25rem;margin-top:2.5rem;
+    }
+    .machine-card{
+      background:var(--navy);border:1px solid var(--rule-solid);padding:1.75rem;
+      transition:border-color .2s;position:relative;overflow:hidden;
+    }
+    .machine-card::before{
+      content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+      background:var(--gold-dim);opacity:0;transition:opacity .2s;
+    }
+    .machine-card:hover{border-color:var(--gold-dim)}
+    .machine-card:hover::before{opacity:1}
+    .machine-card h3{
+      font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:600;
+      color:var(--cream);margin-bottom:.4rem;letter-spacing:.04em;text-transform:uppercase;
+    }
+    .machine-card p{font-size:.9rem;color:var(--fog);line-height:1.6}
+    .machine-tag{
+      display:inline-block;font-family:'Source Code Pro',monospace;font-size:.65rem;
+      letter-spacing:.1em;text-transform:uppercase;
+      color:var(--gold);border:1px solid var(--gold-dim);
+      padding:.15rem .5rem;margin-top:.75rem;
+    }
+
+    /* ── SERVICES ── */
+    .services-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:1.25rem;margin-top:2.5rem;
+    }
+    .service-item{
+      border-left:2px solid var(--gold-dim);padding:1rem 1.5rem;
+    }
+    .service-item h3{
+      font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;
+      color:var(--cream);margin-bottom:.25rem;letter-spacing:.04em;text-transform:uppercase;
+    }
+    .service-item p{font-size:.9rem;color:var(--fog)}
+
+    /* ── REBUILDS ── */
+    .rebuild-steps{margin-top:2.5rem}
+    .rebuild-step{
+      display:flex;gap:1.5rem;padding:1.5rem 0;
+      border-bottom:1px solid var(--rule-solid);
+    }
+    .rebuild-step:last-child{border-bottom:none}
+    .step-num{
+      font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;
+      color:var(--gold-dim);line-height:1;min-width:48px;letter-spacing:.05em;
+    }
+    .rebuild-step h3{
+      font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:600;
+      color:var(--cream);margin-bottom:.2rem;letter-spacing:.04em;text-transform:uppercase;
+    }
+    .rebuild-step p{font-size:.9rem;color:var(--fog)}
+
+    /* ── INVENTORY ── */
+    .inventory-list{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+      gap:.5rem;margin-top:2rem;
+    }
+    .inventory-item{
+      font-family:'Source Code Pro',monospace;font-size:.8rem;
+      color:var(--cream-dim);padding:.65rem .75rem;
+      border-bottom:1px solid var(--rule-solid);transition:color .2s;
+    }
+    .inventory-item:hover{color:var(--gold)}
+
+    /* ── PARTS ── */
+    .parts-columns{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:2.5rem;margin-top:2rem;
+    }
+    .parts-col h3{
+      font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;
+      color:var(--gold);margin-bottom:.75rem;padding-bottom:.5rem;
+      border-bottom:1px solid var(--rule-solid);letter-spacing:.08em;text-transform:uppercase;
+    }
+    .parts-col ul{list-style:none}
+    .parts-col li{
+      font-size:.9rem;color:var(--fog);padding:.35rem 0;
+      border-bottom:1px solid rgba(58,74,108,0.5);
+    }
+
+    /* ── FAQ ── */
+    .faq-item{padding:1.5rem 0;border-bottom:1px solid var(--rule-solid)}
+    .faq-item:first-child{border-top:1px solid var(--rule-solid)}
+    .faq-q{
+      font-family:'Oswald',sans-serif;font-weight:600;font-size:1rem;
+      color:var(--cream);margin-bottom:.4rem;letter-spacing:.02em;
+    }
+    .faq-a{font-size:.9rem;color:var(--fog);max-width:680px;line-height:1.7}
+
+    /* ── CONTACT ── */
+    #contact{text-align:center;padding:5rem 2rem}
+    .contact-phone{
+      font-family:'Oswald',sans-serif;font-size:clamp(2.5rem,6vw,4rem);
+      font-weight:700;color:var(--gold);text-decoration:none;display:block;
+      margin-top:1rem;letter-spacing:.04em;
+    }
+    .contact-phone:hover{color:var(--gold-bright)}
+    .contact-details{margin-top:2rem;font-size:.95rem;color:var(--fog)}
+
+    /* ── FOOTER ── */
+    footer{
+      border-top:1px solid var(--rule-solid);padding:2rem;text-align:center;
+      font-size:.8rem;color:var(--fog);font-style:italic;
+    }
+
+    /* ── MOBILE ── */
+    .mobile-menu-btn{display:none;background:none;border:none;color:var(--cream);font-size:1.4rem;cursor:pointer}
+    @media(max-width:768px){
+      .nav-links{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--navy);border-bottom:1px solid var(--rule-solid);padding:1.25rem 2rem;gap:1rem}
+      .nav-phone{display:none}
+      .mobile-menu-btn{display:block}
+      section{padding:3rem 1.25rem}
+      .rebuild-step{flex-direction:column;gap:.5rem}
+      .step-num{font-size:1.6rem}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Sullivan Trading Co.</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#machines">Machines</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#rebuilds">Rebuilds</a></li>
+    <li><a href="#inventory">Inventory</a></li>
+    <li><a href="#parts">Parts</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:9787648031" class="nav-phone">(978) 764-8031</a>
+  <button class="mobile-menu-btn" onclick="const n=document.getElementById('navLinks');n.style.display=n.style.display==='flex'?'none':'flex'">&#9776;</button>
+</nav>
+
+<section class="hero">
+  <img src="/images/logo.png" alt="Sullivan Trading Company Logo" class="hero-logo">
+  <div class="hero-est">Elmira, New York &mdash; Est. 20+ Years</div>
+  <h1>SULLIVAN<br>TRADING CO.
+    <span>Can Seamer Sales, Parts &amp; Repairs</span>
+  </h1>
+  <div class="hero-rule"></div>
+  <p class="hero-tagline">Over twenty years rebuilding American closing machines. Rebuilt to factory specification or better.</p>
+  <div class="hero-quote">&ldquo;You write the check and we&rsquo;ll can the Statue of Liberty.&rdquo;</div>
+  <div class="hero-cta">
+    <a href="tel:9787648031" class="btn btn-gold">Call (978) 764-8031</a>
+    <a href="#machines" class="btn btn-outline">View Our Machines</a>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<section id="machines" class="sec-alt">
+  <div class="container">
+    <div class="section-label">Machines We Sell &amp; Rebuild</div>
+    <h2 class="section-title">Rebuilt American Closing Machines</h2>
+    <p class="section-intro">Machines in stock and ready to ship. We specialize in the major American can seamer brands.</p>
+    <div class="machine-grid">
+      <div class="machine-card"><h3>American Can / Canco</h3><p>08&rsquo;s, 06&rsquo;s, 05&rsquo;s, and Rooneys. Atmospheric, steam, and vacuum configurations.</p><span class="machine-tag">Most Popular</span></div>
+      <div class="machine-card"><h3>Continental / Pneumatic Scale</h3><p>2000 Series and related models. Full rebuilds with new motors and stainless hardware.</p><span class="machine-tag">In Stock</span></div>
+      <div class="machine-card"><h3>Angelus</h3><p>29P, 69P, 50P Series seamers. Rebuilt and shop-tested for your inspection.</p><span class="machine-tag">In Stock</span></div>
+      <div class="machine-card"><h3>Dixie Can Seamers</h3><p>Full line of Dixie seamers. Rebuilt or good running condition.</p><span class="machine-tag">Available</span></div>
+      <div class="machine-card"><h3>Rooney Semi-Automatic</h3><p>Semi-automatic seamers for lower-volume operations. Shop-tested.</p><span class="machine-tag">Available</span></div>
+      <div class="machine-card"><h3>Specialty &amp; Lab</h3><p>HO Lab Seamers, Number 1 Pacific, Number 1 Western, and more.</p><span class="machine-tag">Contact Us</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<section id="services">
+  <div class="container">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-title">Services</h2>
+    <div class="services-grid">
+      <div class="service-item"><h3>Machine Sales</h3><p>Rebuilt and good running condition can seamers, ready to ship.</p></div>
+      <div class="service-item"><h3>On-Site Repair</h3><p>We come to you. Troubleshooting, seaming height adjustments, diameter changes.</p></div>
+      <div class="service-item"><h3>Parts Sales</h3><p>Seaming heads, cover feeds, chucks, rolls, can guides, cams, shafts, and more.</p></div>
+      <div class="service-item"><h3>Complete Rebuilds</h3><p>Full machine overhauls. Shop-tested and sold with warranty.</p></div>
+      <div class="service-item"><h3>Troubleshooting</h3><p>Can&rsquo;t figure it out? We&rsquo;ve seen it all. Call us.</p></div>
+      <div class="service-item"><h3>Manual Reprints</h3><p>Extensive library of original manuals. Reprints at modest service price.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<section id="rebuilds" class="sec-alt">
+  <div class="container">
+    <div class="section-label">Our Process</div>
+    <h2 class="section-title">The Rebuild</h2>
+    <p class="section-intro">Refined over twenty years. Each machine has taught us something new about how to achieve optimal performance.</p>
+    <div class="rebuild-steps">
+      <div class="rebuild-step"><div class="step-num">01</div><div><h3>Inspection &amp; Teardown</h3><p>Complete disassembly. Every part inspected for wear. Worn parts replaced from our inventory.</p></div></div>
+      <div class="rebuild-step"><div class="step-num">02</div><div><h3>Hardware Replacement</h3><p>Rusty bolts replaced with new stainless steel fasteners &mdash; corrosion resistant, easier future maintenance.</p></div></div>
+      <div class="rebuild-step"><div class="step-num">03</div><div><h3>Sandblasting &amp; Powder Coat</h3><p>Hatches, handles, and can-contact parts professionally sandblasted and powder coated with FDA-approved coating.</p></div></div>
+      <div class="rebuild-step"><div class="step-num">04</div><div><h3>New Motor</h3><p>Brand new motor configured for 3-phase 230V or 460V to match your facility.</p></div></div>
+      <div class="rebuild-step"><div class="step-num">05</div><div><h3>Reassembly &amp; Testing</h3><p>Every piece oiled and greased. Seaming height set to spec. Shop-tested for your inspection.</p></div></div>
+      <div class="rebuild-step"><div class="step-num">06</div><div><h3>Ships with Manual</h3><p>Sold with warranty. Ships with original manual. Final adjustments made on-site.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<section id="inventory">
+  <div class="container">
+    <div class="section-label">Current Stock</div>
+    <h2 class="section-title">Machine Inventory</h2>
+    <p class="section-intro">We maintain a rotating stock and are always buying more. Have a machine to sell or trade? Contact us.</p>
+    <div class="inventory-list">
+      <div class="inventory-item">2006-4 (6 Head)</div>
+      <div class="inventory-item">2004 (4 Head)</div>
+      <div class="inventory-item">Angelus 29-P</div>
+      <div class="inventory-item">Angelus 60L</div>
+      <div class="inventory-item">Canco 006 Vacuum</div>
+      <div class="inventory-item">Canco 08-C Vacuum</div>
+      <div class="inventory-item">HO Lab Seamer</div>
+      <div class="inventory-item">Number 1 Pacific</div>
+      <div class="inventory-item">Canco No. 1 Western</div>
+      <div class="inventory-item">Canco No. 2 Type A</div>
+      <div class="inventory-item">Labeler</div>
+      <div class="inventory-item">Rooney Semi-Auto</div>
+    </div>
+    <p style="color:var(--fog);font-size:.85rem;margin-top:1.5rem;font-style:italic">Don&rsquo;t see what you need? Call us &mdash; we may have it or can source it.</p>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<section id="parts" class="sec-alt">
+  <div class="container">
+    <div class="section-label">Replacement Parts</div>
+    <h2 class="section-title">Parts For Sale</h2>
+    <div class="parts-columns">
+      <div class="parts-col"><h3>Seaming Components</h3><ul><li>Seaming Heads</li><li>Chucks and Rolls</li><li>Cover Feeds</li><li>Separator Knives</li><li>Lifter Plates</li></ul></div>
+      <div class="parts-col"><h3>Drive Components</h3><ul><li>Cams and Shafts</li><li>Roller Bearings</li><li>Feed Chains</li><li>Can Guides</li><li>Drive Clutch Gears</li></ul></div>
+      <div class="parts-col"><h3>Manuals Available</h3><ul><li>Canco 06 Atmo / Vacuum</li><li>Canco 08 Atmo / Vacuum</li><li>Canco #1 Western</li><li>Continental 2000 Series</li><li>Angelus 29P, 69P, 50P</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-label">Frequently Asked</div>
+    <h2 class="section-title">Common Questions</h2>
+    <div class="faq-item"><div class="faq-q">Can I change the speed of my seamer?</div><div class="faq-a">Yes. Can seamers are rated for a range of speeds within a certain class. Changes can be made using a Variable Frequency Drive (VFD) or by changing the sheaves on the motor. Once you top out the machine&rsquo;s maximum rating, it&rsquo;s time to start shopping for another one.</div></div>
+    <div class="faq-item"><div class="faq-q">What&rsquo;s the difference between &ldquo;Rebuild&rdquo; and &ldquo;Good Running Condition&rdquo;?</div><div class="faq-a">Our rebuilds are complete machine overhauls &mdash; shop-tested for your inspection and sold with warranty. Good Running Condition machines have been shop-run to verify they operate as expected, but haven&rsquo;t undergone a full teardown and rebuild.</div></div>
+    <div class="faq-item"><div class="faq-q">Do you do on-site service?</div><div class="faq-a">Yes. We offer on-site repair, seaming height adjustments, diameter changes, and general troubleshooting. Call us to schedule.</div></div>
+    <div class="faq-item"><div class="faq-q">What voltage do your rebuilt machines run on?</div><div class="faq-a">Rebuilds get a brand new motor configured for 3-phase 230V or 460V depending on your needs.</div></div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Ready to Talk Seamers?</h2>
+    <a href="tel:9787648031" class="contact-phone">(978) 764-8031</a>
+    <div class="contact-details">
+      <p style="font-style:italic">Sullivan Trading Company, Inc.</p>
+      <p style="margin-top:1.5rem;font-size:.9rem;color:var(--cream-dim)">
+        Check your email for your secure payment link
+      </p>
+      <p style="margin-top:.5rem;font-size:.8rem;color:var(--fog)">Invoices are sent with a unique Stripe payment link</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Sullivan Trading Company, Inc. &mdash; Can Seamer Sales, Parts &amp; Repairs</p>
+</footer>
+
+</body>
+</html>

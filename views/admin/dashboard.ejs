@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/admin-head') %>
+  <title>Dashboard — Sullivan Trading Admin</title>
+</head>
+<body>
+  <%- include('../partials/admin-nav') %>
+  <div class="admin-wrap">
+    <%- include('../partials/admin-flash') %>
+
+    <h1 class="page-title">Dashboard</h1>
+
+    <!-- Stat Cards -->
+    <div class="stats-grid">
+      <div class="stat-card stat-pending">
+        <div class="stat-label">Pending</div>
+        <div class="stat-value"><%= stats.pending.count %></div>
+        <div class="stat-sub">$<%= (stats.pending.total / 100).toFixed(2) %></div>
+      </div>
+      <div class="stat-card stat-paid">
+        <div class="stat-label">Paid</div>
+        <div class="stat-value"><%= stats.paid.count %></div>
+        <div class="stat-sub">$<%= (stats.paid.total / 100).toFixed(2) %></div>
+      </div>
+      <div class="stat-card stat-overdue">
+        <div class="stat-label">Overdue</div>
+        <div class="stat-value"><%= stats.overdue.count %></div>
+        <div class="stat-sub">$<%= (stats.overdue.total / 100).toFixed(2) %></div>
+      </div>
+    </div>
+
+    <!-- Create Button -->
+    <div style="margin-bottom: 2rem;">
+      <a href="/admin/invoices/new" class="btn btn-gold">Create New Invoice</a>
+    </div>
+
+    <!-- Recent Invoices -->
+    <div class="section-label">Recent Invoices</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Invoice #</th>
+            <th>Customer</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (invoices.length === 0) { %>
+            <tr><td colspan="6" style="text-align: center; color: var(--fog); padding: 2rem;">No invoices yet. Create your first one.</td></tr>
+          <% } else { %>
+            <% invoices.forEach(inv => { %>
+              <tr>
+                <td style="font-family: 'Source Code Pro', monospace; font-size: .8rem;"><%= inv.invoice_number %></td>
+                <td><%= inv.customer_name %></td>
+                <td style="font-family: 'Source Code Pro', monospace;">$<%= (inv.total_cents / 100).toFixed(2) %></td>
+                <td><span class="badge badge-<%= inv.status %>"><%= inv.status %></span></td>
+                <td style="font-family: 'Source Code Pro', monospace; font-size: .75rem; color: var(--fog);"><%= inv.created_at.split('T')[0] || inv.created_at.split(' ')[0] %></td>
+                <td><a href="/admin/invoices/<%= inv.id %>" class="btn btn-outline btn-sm">View</a></td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

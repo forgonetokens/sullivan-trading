@@ -1,0 +1,333 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --navy: #0f1a2e;
+    --navy-light: #162240;
+    --navy-mid: #1c2d4f;
+    --slate: #2a3a5c;
+    --gold: #c9a84c;
+    --gold-dim: #a68a3a;
+    --gold-bright: #e2c465;
+    --cream: #e8dcc8;
+    --cream-dim: #bfb49e;
+    --fog: #7a899e;
+    --rule: rgba(201,168,76,0.2);
+    --rule-solid: #3a4a6c;
+    --green: #4caf50;
+    --red: #e74c3c;
+    --orange: #f39c12;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Libre Baskerville', 'Georgia', serif;
+    background: var(--navy);
+    color: var(--cream);
+    line-height: 1.6;
+  }
+
+  /* ── Admin Layout ── */
+  .admin-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    padding-top: 80px;
+  }
+
+  /* ── Typography ── */
+  .page-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 1.5rem;
+  }
+  .section-label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .3em;
+    color: var(--gold-dim);
+    margin-bottom: .5rem;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--navy-light);
+    border: 1px solid var(--rule-solid);
+    padding: 1.5rem;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-block;
+    padding: .7rem 1.75rem;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: .85rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { background: var(--gold-bright); }
+  .btn-outline {
+    background: transparent;
+    color: var(--cream-dim);
+    border: 1.5px solid var(--slate);
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-sm { padding: .4rem 1rem; font-size: .75rem; }
+  .btn-danger { background: var(--red); color: #fff; }
+
+  /* ── Tables ── */
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .85rem;
+  }
+  th {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--gold-dim);
+    text-align: left;
+    padding: .75rem .5rem;
+    border-bottom: 1px solid var(--rule-solid);
+  }
+  td {
+    padding: .75rem .5rem;
+    border-bottom: 1px solid rgba(58,74,108,0.3);
+    color: var(--cream-dim);
+  }
+  tr:hover td { color: var(--cream); }
+
+  /* ── Status Badges ── */
+  .badge {
+    display: inline-block;
+    font-family: 'Source Code Pro', monospace;
+    font-size: .65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: .2rem .6rem;
+    border-radius: 2px;
+  }
+  .badge-draft { background: var(--slate); color: var(--fog); }
+  .badge-pending { background: rgba(243,156,18,0.2); color: var(--orange); border: 1px solid rgba(243,156,18,0.3); }
+  .badge-paid { background: rgba(76,175,80,0.2); color: var(--green); border: 1px solid rgba(76,175,80,0.3); }
+  .badge-overdue { background: rgba(231,76,60,0.2); color: var(--red); border: 1px solid rgba(231,76,60,0.3); }
+
+  /* ── Forms ── */
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  .form-group label {
+    display: block;
+    font-family: 'Source Code Pro', monospace;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    color: var(--gold-dim);
+    margin-bottom: .4rem;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: .65rem .85rem;
+    background: var(--navy);
+    border: 1px solid var(--rule-solid);
+    color: var(--cream);
+    font-family: 'Source Code Pro', monospace;
+    font-size: .85rem;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--gold);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  /* ── Stat Cards ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: var(--navy-light);
+    border: 1px solid var(--rule-solid);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-card .stat-label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .65rem;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    color: var(--fog);
+    margin-bottom: .5rem;
+  }
+  .stat-card .stat-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-card .stat-sub {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .75rem;
+    color: var(--fog);
+    margin-top: .35rem;
+  }
+  .stat-pending .stat-value { color: var(--orange); }
+  .stat-paid .stat-value { color: var(--green); }
+  .stat-overdue .stat-value { color: var(--red); }
+
+  /* ── Copy Button ── */
+  .copy-btn {
+    background: var(--slate);
+    color: var(--cream-dim);
+    border: 1px solid var(--rule-solid);
+    padding: .3rem .75rem;
+    font-family: 'Source Code Pro', monospace;
+    font-size: .7rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .copy-btn.copied { background: rgba(76,175,80,0.2); color: var(--green); border-color: var(--green); }
+
+  /* ── Filter Tabs ── */
+  .filter-tabs {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .filter-tab {
+    font-family: 'Oswald', sans-serif;
+    font-size: .75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: .45rem 1rem;
+    text-decoration: none;
+    color: var(--fog);
+    border: 1px solid var(--rule-solid);
+    transition: all .2s;
+  }
+  .filter-tab:hover { border-color: var(--gold-dim); color: var(--cream); }
+  .filter-tab.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+
+  /* ── Search ── */
+  .search-bar {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: 1rem;
+  }
+  .search-bar input {
+    flex: 1;
+    padding: .6rem .85rem;
+    background: var(--navy);
+    border: 1px solid var(--rule-solid);
+    color: var(--cream);
+    font-family: 'Source Code Pro', monospace;
+    font-size: .85rem;
+    outline: none;
+  }
+  .search-bar input:focus { border-color: var(--gold); }
+  .search-bar button {
+    padding: .6rem 1.25rem;
+    background: var(--slate);
+    border: 1px solid var(--rule-solid);
+    color: var(--cream-dim);
+    font-family: 'Oswald', sans-serif;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .search-bar button:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── Timeline ── */
+  .timeline {
+    border-left: 2px solid var(--rule-solid);
+    padding-left: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 1.25rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.75rem;
+    top: .35rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    border: 2px solid var(--navy);
+  }
+  .timeline-item .tl-date {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .7rem;
+    color: var(--fog);
+  }
+  .timeline-item .tl-text {
+    font-size: .85rem;
+    color: var(--cream-dim);
+  }
+
+  /* ── Payment Link Box ── */
+  .payment-link-box {
+    background: var(--navy);
+    border: 1px solid var(--rule-solid);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-top: 1rem;
+  }
+  .payment-link-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-family: 'Source Code Pro', monospace;
+    font-size: .8rem;
+    outline: none;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .admin-wrap { padding: 1rem; padding-top: 70px; }
+    .form-row { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr; }
+  }
+</style>
