@@ -1,8 +1,17 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const rateLimit = require('express-rate-limit');
 const router = express.Router();
 const { requireAuth } = require('../middleware/auth');
 const db = require('../db/database');
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10,                   // 10 attempts per window
+  message: 'Too many login attempts — try again in 15 minutes.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // --- Login ---
 router.get('/login', (req, res) => {
@@ -10,7 +19,7 @@ router.get('/login', (req, res) => {
   res.render('admin/login', { error: null });
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', loginLimiter, async (req, res) => {
   const { password } = req.body;
   const hash = process.env.ADMIN_PASSWORD_HASH;
 

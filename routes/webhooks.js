@@ -12,7 +12,7 @@ router.post('/stripe', express.raw({ type: 'application/json' }), (req, res) => 
 
   if (!webhookSecret) {
     console.error('STRIPE_WEBHOOK_SECRET not configured');
-    return res.status(500).send('Webhook secret not configured');
+    return res.status(500).send('Webhook configuration error');
   }
 
   let event;
@@ -20,7 +20,7 @@ router.post('/stripe', express.raw({ type: 'application/json' }), (req, res) => 
     event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err) {
     console.error('Webhook signature verification failed:', err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    return res.status(400).send('Webhook signature verification failed');
   }
 
   // Handle checkout.session.completed

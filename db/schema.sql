@@ -37,5 +37,10 @@ CREATE TABLE IF NOT EXISTS posts (
   published_at TEXT
 );
 
+-- Indexes
+CREATE INDEX IF NOT EXISTS idx_invoices_status ON invoices(status);
+CREATE INDEX IF NOT EXISTS idx_invoices_payment_link ON invoices(stripe_payment_link_id);
+CREATE INDEX IF NOT EXISTS idx_posts_status_published ON posts(status, published_at);
+
 -- Add hero_image column if missing (existing databases)
 -- SQLite doesn't support IF NOT EXISTS for ALTER TABLE, so this is handled in database.js

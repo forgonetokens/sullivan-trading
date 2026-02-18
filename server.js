@@ -2,6 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const session = require('express-session');
+const compression = require('compression');
+const helmet = require('helmet');
 const path = require('path');
 const db_helpers = require('./db/database');
 
@@ -10,6 +12,14 @@ const PORT = process.env.PORT || 3000;
 
 // ── Trust Railway's reverse proxy (required for HTTPS cookies & sessions) ──
 app.set('trust proxy', 1);
+
+// ── Security headers ──
+app.use(helmet({
+  contentSecurityPolicy: false, // EJS templates use inline styles/scripts
+}));
+
+// ── Gzip/deflate compression ──
+app.use(compression());
 
 // ── Webhook route FIRST (needs raw body for Stripe signature) ──
 const webhookRoutes = require('./routes/webhooks');
@@ -43,8 +53,11 @@ app.use(session({
   },
 }));
 
-// ── Static files (public site) ──
-app.use(express.static(path.join(__dirname, 'public')));
+// ── Static files with cache headers ──
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: '7d',           // cache images/videos/css for 7 days
+  immutable: false,
+}));
 
 // ── Homepage route (EJS with blog teasers) ──
 app.get('/', (req, res) => {

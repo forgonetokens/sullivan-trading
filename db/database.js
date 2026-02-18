@@ -142,12 +142,17 @@ function markOverdueInvoices() {
 
 function getDashboardStats() {
   const db = getDb();
-  const stats = {};
-  for (const status of ['pending', 'paid', 'overdue']) {
-    const row = db.prepare(
-      'SELECT COUNT(*) as count, COALESCE(SUM(total_cents), 0) as total FROM invoices WHERE status = ?'
-    ).get(status);
-    stats[status] = row;
+  const rows = db.prepare(
+    `SELECT status, COUNT(*) as count, COALESCE(SUM(total_cents), 0) as total
+     FROM invoices WHERE status IN ('pending', 'paid', 'overdue') GROUP BY status`
+  ).all();
+  const stats = {
+    pending: { count: 0, total: 0 },
+    paid: { count: 0, total: 0 },
+    overdue: { count: 0, total: 0 },
+  };
+  for (const row of rows) {
+    stats[row.status] = { count: row.count, total: row.total };
   }
   return stats;
 }
