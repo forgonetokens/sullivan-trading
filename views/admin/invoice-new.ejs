@@ -117,6 +117,13 @@
 
     addLineBtn.addEventListener('click', createLineItem);
     lineItems.addEventListener('input', updateTotal);
+
+    // Prevent double submission while Stripe payment link is being created
+    document.getElementById('invoiceForm').addEventListener('submit', function() {
+      const btn = this.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Creating…';
+    });
   </script>
 </body>
 </html>
