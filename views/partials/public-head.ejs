@@ -40,13 +40,13 @@
     position:fixed;top:0;left:0;right:0;z-index:100;
     background:rgba(15,26,46,0.95);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--rule-solid);
-    padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;
+    padding:0 2rem;display:flex;align-items:center;height:60px;
   }
   .nav-logo{
     font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;
     color:var(--gold);text-decoration:none;letter-spacing:.15em;text-transform:uppercase;
   }
-  .nav-links{display:flex;gap:1.75rem;list-style:none}
+  .nav-links{display:flex;gap:1.75rem;list-style:none;position:absolute;left:50%;transform:translateX(-50%)}
   .nav-links a{
     color:var(--fog);text-decoration:none;
     font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:500;

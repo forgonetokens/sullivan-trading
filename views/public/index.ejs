@@ -21,8 +21,8 @@
     }
     .hero-content{
       position:absolute;inset:0;z-index:2;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      padding:6rem 2rem 4rem;
+      display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+      padding-top:18%;padding-left:2rem;padding-right:2rem;
     }
     .hero-title-block{
       display:inline-flex;flex-direction:column;align-items:stretch;
@@ -33,7 +33,7 @@
       white-space:nowrap;
     }
     .hero-line1{
-      font-weight:700;
+      font-weight:600;
       font-size:clamp(4.5rem,14vw,11rem);
       letter-spacing:.063em;
     }
@@ -53,7 +53,7 @@
     .hero-cta-bar{
       position:relative;z-index:2;
       display:flex;gap:1.25rem;flex-wrap:wrap;justify-content:center;
-      padding:1.5rem 2rem;background:var(--navy);
+      padding:1.5rem 2rem;margin-top:3.5rem;background:var(--navy);
     }
     .hero-cta-bar .btn{
       padding:1.1rem 3.25rem;font-size:1rem;
@@ -103,10 +103,17 @@
     /* ── REBUILDS ── */
     .rebuild-steps{margin-top:2.5rem}
     .rebuild-step{
-      display:flex;gap:1.5rem;padding:1.5rem 0;
+      display:flex;gap:1.5rem;padding:2.16rem 0;
       border-bottom:1px solid var(--rule-solid);
+      width:55%;
     }
     .rebuild-step:last-child{border-bottom:none}
+    .rebuild-step:nth-child(odd){
+      margin-right:auto;
+    }
+    .rebuild-step:nth-child(even){
+      margin-left:auto;
+    }
     .step-num{
       font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;
       color:var(--gold-dim);line-height:1;min-width:48px;letter-spacing:.05em;
@@ -158,6 +165,21 @@
       font-size:.9rem;color:var(--fog);padding:.35rem 0;
       border-bottom:1px solid rgba(58,74,108,0.5);
     }
+
+    /* ── MANUALS ── */
+    .manuals-intro{font-size:1.05rem;color:var(--fog);max-width:680px;line-height:1.8;margin-top:1rem}
+    .manuals-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:1rem;margin-top:2.5rem;
+    }
+    .manual-item{
+      border-left:2px solid var(--gold-dim);padding:.75rem 1.25rem;
+    }
+    .manual-item h3{
+      font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;
+      color:var(--cream);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.25rem;
+    }
+    .manual-item p{font-size:.85rem;color:var(--fog);line-height:1.5}
 
     /* ── FAQ ── */
     .faq-item{padding:1.5rem 0;border-bottom:1px solid var(--rule-solid)}
@@ -253,10 +275,10 @@
   <div class="container">
     <div class="section-label">Machines We Sell &amp; Rebuild</div>
     <h2 class="section-title">Vacuum and Atmospheric Closing Machines</h2>
-    <p class="section-intro">Machines in stock and ready to ship. We specialize in the major American can seamer brands.</p>
+    <p class="section-intro">We carry all the major can seamer brands, but our specialty is the American Can 08 and 06 models &mdash; rebuilt, shop-tested, and ready to ship.</p>
     <div class="machine-grid">
       <div class="machine-card"><h3>American Can / Canco</h3><p>08&rsquo;s, 06&rsquo;s, 05&rsquo;s, and Rooneys. Atmospheric, steam, and vacuum configurations.</p><span class="machine-tag">Most Popular</span></div>
-      <div class="machine-card"><h3>Continental / Pneumatic Scale</h3><p>2000 Series and related models. Full rebuilds with new motors and stainless hardware.</p><span class="machine-tag">In Stock</span></div>
+      <div class="machine-card"><h3>Continental / Pneumatic Scale</h3><p>2000 Series and related models. Available in good running condition.</p><span class="machine-tag">In Stock</span></div>
       <div class="machine-card"><h3>Angelus</h3><p>29P, 69P, 50P Series seamers. Rebuilt and shop-tested for your inspection.</p><span class="machine-tag">In Stock</span></div>
       <div class="machine-card"><h3>Dixie Can Seamers</h3><p>Full line of Dixie seamers. Rebuilt or good running condition.</p><span class="machine-tag">Available</span></div>
       <div class="machine-card"><h3>Rooney Semi-Automatic</h3><p>Semi-automatic seamers for lower-volume operations. Shop-tested.</p><span class="machine-tag">Available</span></div>
@@ -333,8 +355,26 @@
     <div class="parts-columns">
       <div class="parts-col"><h3>Seaming Components</h3><ul><li>Seaming Heads</li><li>Chucks and Rolls</li><li>Cover Feeds</li><li>Separator Knives</li><li>Lifter Plates</li></ul></div>
       <div class="parts-col"><h3>Drive Components</h3><ul><li>Cams and Shafts</li><li>Roller Bearings</li><li>Feed Chains</li><li>Can Guides</li><li>Drive Clutch Gears</li></ul></div>
-      <div class="parts-col"><h3>Manuals Available</h3><ul><li>Canco 06 Atmo / Vacuum</li><li>Canco 08 Atmo / Vacuum</li><li>Canco #1 Western</li><li>Continental 2000 Series</li><li>Angelus 29P, 69P, 50P</li></ul></div>
     </div>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<section id="manuals">
+  <div class="container">
+    <div class="section-label">Technical Library</div>
+    <h2 class="section-title">Can Seamer Manuals</h2>
+    <p class="manuals-intro">We maintain one of the largest private collections of canning machine manuals in existence. We offer copies for a nominal service fee. The knowledge of how to run, maintain, and repair these machines shouldn't disappear &mdash; it should be passed down to the people still using them.</p>
+    <div class="manuals-grid">
+      <div class="manual-item"><h3>Canco / American Can</h3><p>06 Atmo &amp; Vacuum, 08-C Vacuum, #1 Western, #1 Pacific, #2 Type A, HO Lab Seamer</p></div>
+      <div class="manual-item"><h3>Continental</h3><p>2000 Series, 2100 Series, Can-O-Mat models</p></div>
+      <div class="manual-item"><h3>Angelus</h3><p>29P, 50P, 60L, 69P closing machines</p></div>
+      <div class="manual-item"><h3>FMC / Barry-Wehmiller</h3><p>Pneumatic Templar, Clincher series</p></div>
+      <div class="manual-item"><h3>Dixie</h3><p>Dixie Double Seamer models</p></div>
+      <div class="manual-item"><h3>General Maintenance</h3><p>Double seam inspection, seaming roll setup, chuck &amp; roll specifications, troubleshooting guides</p></div>
+    </div>
+    <p style="margin-top:2rem;font-size:.9rem;color:var(--fog)">Don't see your manual listed? Call us &mdash; if we don't have it, we probably know who does.</p>
   </div>
 </section>
 
@@ -356,8 +396,9 @@
 
 <section id="blog" class="sec-alt">
   <div class="container">
+    <div class="section-label" style="color:var(--gold)">Our Monthly Newsletter</div>
     <h2 class="section-title">Can Heritage</h2>
-    <p class="section-intro">News, tips, and stories from the world of can seamers.</p>
+    <p class="section-intro">Stories we collected along the way</p>
     <div class="blog-teaser-grid">
       <% posts.forEach(post => { %>
         <a href="/blog/<%= post.slug %>" class="blog-teaser-card">
