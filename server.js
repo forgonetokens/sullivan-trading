@@ -8,6 +8,9 @@ const { getDb } = require('./db/database');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ── Trust Railway's reverse proxy (required for HTTPS cookies & sessions) ──
+app.set('trust proxy', 1);
+
 // ── Webhook route FIRST (needs raw body for Stripe signature) ──
 const webhookRoutes = require('./routes/webhooks');
 app.use('/webhooks', webhookRoutes);
@@ -36,6 +39,7 @@ app.use(session({
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     httpOnly: true,
     sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
   },
 }));
 
@@ -46,8 +50,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 const adminRoutes = require('./routes/admin');
 app.use('/admin', adminRoutes);
 
+// ── Health check (for Railway) ──
+app.get('/health', (req, res) => res.send('ok'));
+
 // ── Start ──
-app.listen(PORT, () => {
-  console.log(`Sullivan Trading running at http://localhost:${PORT}`);
-  console.log(`Admin dashboard: http://localhost:${PORT}/admin`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Sullivan Trading running on port ${PORT}`);
+  console.log(`Admin dashboard: /admin`);
 });
