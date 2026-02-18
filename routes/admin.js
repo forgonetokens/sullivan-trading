@@ -161,12 +161,12 @@ router.get('/posts/new', requireAuth, (req, res) => {
 
 router.post('/posts', requireAuth, (req, res) => {
   try {
-    const { title, slug, excerpt, body, status } = req.body;
+    const { title, slug, excerpt, body, status, hero_image } = req.body;
     if (!title) {
       return res.render('admin/post-form', { post: req.body, error: 'Title is required.' });
     }
     const finalSlug = slug ? slugify(slug) : slugify(title);
-    db.createPost({ title, slug: finalSlug, excerpt, body, status: status || 'draft' });
+    db.createPost({ title, slug: finalSlug, excerpt, body, status: status || 'draft', hero_image });
     req.session.flash_success = `Post "${title}" created.`;
     res.redirect('/admin/posts');
   } catch (err) {
@@ -188,12 +188,12 @@ router.get('/posts/:id/edit', requireAuth, (req, res) => {
 
 router.post('/posts/:id', requireAuth, (req, res) => {
   try {
-    const { title, slug, excerpt, body, status } = req.body;
+    const { title, slug, excerpt, body, status, hero_image } = req.body;
     if (!title) {
       return res.render('admin/post-form', { post: { ...req.body, id: req.params.id }, error: 'Title is required.' });
     }
     const finalSlug = slug ? slugify(slug) : slugify(title);
-    db.updatePost(req.params.id, { title, slug: finalSlug, excerpt, body, status: status || 'draft' });
+    db.updatePost(req.params.id, { title, slug: finalSlug, excerpt, body, status: status || 'draft', hero_image });
     req.session.flash_success = `Post "${title}" updated.`;
     res.redirect('/admin/posts');
   } catch (err) {

@@ -17,6 +17,12 @@ function getDb() {
     // Run schema
     const schema = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8');
     db.exec(schema);
+
+    // Migrate: add hero_image column if missing
+    const cols = db.prepare("PRAGMA table_info(posts)").all();
+    if (!cols.find(c => c.name === 'hero_image')) {
+      db.exec("ALTER TABLE posts ADD COLUMN hero_image TEXT");
+    }
   }
   return db;
 }
@@ -152,17 +158,17 @@ function getRecentInvoices(limit = 10) {
 
 // --- Post helpers ---
 
-function createPost({ title, slug, excerpt, body, status }) {
+function createPost({ title, slug, excerpt, body, status, hero_image }) {
   const db = getDb();
   const published_at = status === 'published' ? new Date().toISOString() : null;
   const result = db.prepare(`
-    INSERT INTO posts (title, slug, excerpt, body, status, published_at)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `).run(title, slug, excerpt || null, body || null, status || 'draft', published_at);
+    INSERT INTO posts (title, slug, excerpt, body, status, published_at, hero_image)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `).run(title, slug, excerpt || null, body || null, status || 'draft', published_at, hero_image || null);
   return result.lastInsertRowid;
 }
 
-function updatePost(id, { title, slug, excerpt, body, status }) {
+function updatePost(id, { title, slug, excerpt, body, status, hero_image }) {
   const db = getDb();
   const existing = db.prepare('SELECT status, published_at FROM posts WHERE id = ?').get(id);
   let published_at = existing ? existing.published_at : null;
@@ -174,9 +180,9 @@ function updatePost(id, { title, slug, excerpt, body, status }) {
   }
   db.prepare(`
     UPDATE posts SET title = ?, slug = ?, excerpt = ?, body = ?, status = ?,
-      updated_at = datetime('now'), published_at = ?
+      updated_at = datetime('now'), published_at = ?, hero_image = ?
     WHERE id = ?
-  `).run(title, slug, excerpt || null, body || null, status || 'draft', published_at, id);
+  `).run(title, slug, excerpt || null, body || null, status || 'draft', published_at, hero_image || null, id);
 }
 
 function deletePost(id) {

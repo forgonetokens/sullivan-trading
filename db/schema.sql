@@ -30,8 +30,12 @@ CREATE TABLE IF NOT EXISTS posts (
   slug TEXT NOT NULL UNIQUE,
   excerpt TEXT,
   body TEXT,
+  hero_image TEXT,
   status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft','published')),
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now')),
   published_at TEXT
 );
+
+-- Add hero_image column if missing (existing databases)
+-- SQLite doesn't support IF NOT EXISTS for ALTER TABLE, so this is handled in database.js
