@@ -25,18 +25,26 @@
       padding:6rem 2rem 4rem;
     }
     .hero h1{
-      font-family:'Oswald',sans-serif;font-size:clamp(3rem,9vw,7rem);
-      font-weight:700;color:var(--cream);line-height:.9;
+      font-family:'Oswald',sans-serif;font-size:clamp(4.5rem,14vw,11rem);
+      font-weight:700;color:var(--cream);line-height:1;
       letter-spacing:.06em;text-transform:uppercase;
+    }
+    .hero h1 .hero-line2{
+      display:block;font-size:clamp(2.5rem,7vw,5.5rem);
+      margin-top:.25rem;
     }
     .hero h1 span{
       display:block;
       font-family:'Libre Baskerville',serif;font-style:italic;
-      font-size:clamp(1.2rem,3vw,2rem);font-weight:400;
+      font-size:clamp(1.2rem,3vw,2.2rem);font-weight:400;
       color:var(--gold);letter-spacing:.02em;text-transform:none;
-      margin-top:1.25rem;
+      margin-top:1.5rem;
     }
-    .hero-cta{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+    .hero-cta-bar{
+      position:relative;z-index:2;
+      display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;
+      padding:1.5rem 2rem;background:var(--navy);
+    }
 
     /* ── MACHINES ── */
     .machine-grid{
@@ -54,10 +62,10 @@
     .machine-card:hover{border-color:var(--gold-dim)}
     .machine-card:hover::before{opacity:1}
     .machine-card h3{
-      font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:600;
+      font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:600;
       color:var(--cream);margin-bottom:.4rem;letter-spacing:.04em;text-transform:uppercase;
     }
-    .machine-card p{font-size:.9rem;color:var(--fog);line-height:1.6}
+    .machine-card p{font-size:.95rem;color:var(--fog);line-height:1.6}
     .machine-tag{
       display:inline-block;font-family:'Source Code Pro',monospace;font-size:.65rem;
       letter-spacing:.1em;text-transform:uppercase;
@@ -74,10 +82,10 @@
       border-left:2px solid var(--gold-dim);padding:1rem 1.5rem;
     }
     .service-item h3{
-      font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;
+      font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:600;
       color:var(--cream);margin-bottom:.25rem;letter-spacing:.04em;text-transform:uppercase;
     }
-    .service-item p{font-size:.9rem;color:var(--fog)}
+    .service-item p{font-size:.95rem;color:var(--fog)}
 
     /* ── REBUILDS ── */
     .rebuild-steps{margin-top:2.5rem}
@@ -91,10 +99,10 @@
       color:var(--gold-dim);line-height:1;min-width:48px;letter-spacing:.05em;
     }
     .rebuild-step h3{
-      font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:600;
+      font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:600;
       color:var(--cream);margin-bottom:.2rem;letter-spacing:.04em;text-transform:uppercase;
     }
-    .rebuild-step p{font-size:.9rem;color:var(--fog)}
+    .rebuild-step p{font-size:.95rem;color:var(--fog)}
 
     /* ── INVENTORY ── */
     .inventory-grid{
@@ -113,7 +121,7 @@
     .inventory-card:hover img{filter:brightness(1)}
     .inventory-card-info{padding:1rem 1.25rem}
     .inventory-card-info h3{
-      font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;
+      font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:600;
       color:var(--cream);letter-spacing:.04em;text-transform:uppercase;
       margin-bottom:.2rem;
     }
@@ -128,7 +136,7 @@
       gap:2.5rem;margin-top:2rem;
     }
     .parts-col h3{
-      font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;
+      font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:600;
       color:var(--gold);margin-bottom:.75rem;padding-bottom:.5rem;
       border-bottom:1px solid var(--rule-solid);letter-spacing:.08em;text-transform:uppercase;
     }
@@ -142,10 +150,10 @@
     .faq-item{padding:1.5rem 0;border-bottom:1px solid var(--rule-solid)}
     .faq-item:first-child{border-top:1px solid var(--rule-solid)}
     .faq-q{
-      font-family:'Oswald',sans-serif;font-weight:600;font-size:1rem;
+      font-family:'Oswald',sans-serif;font-weight:600;font-size:1.2rem;
       color:var(--cream);margin-bottom:.4rem;letter-spacing:.02em;
     }
-    .faq-a{font-size:.9rem;color:var(--fog);max-width:680px;line-height:1.7}
+    .faq-a{font-size:.95rem;color:var(--fog);max-width:680px;line-height:1.7}
 
     /* ── BLOG TEASERS ── */
     .blog-teaser-grid{
@@ -194,7 +202,8 @@
         position:absolute;inset:0;width:100%;height:100%;
         object-fit:cover;
       }
-      .hero-content{padding:4rem 1.5rem 3rem}
+      .hero-content{padding:4rem 1.5rem 2rem}
+      .hero-cta-bar{padding:1rem 1.5rem}
       .rebuild-step{flex-direction:column;gap:.5rem}
       .step-num{font-size:1.6rem}
     }
@@ -210,13 +219,13 @@
   </video>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <h1>SULLIVAN<br>TRADING CO.
+    <h1>SULLIVAN<span class="hero-line2">TRADING CO.</span>
       <span>Can Seamer Sales &amp; Repair</span>
     </h1>
-    <div class="hero-cta">
-      <a href="tel:9787648031" class="btn btn-gold">Call (978) 764-8031</a>
-      <a href="#machines" class="btn btn-outline">View Our Machines</a>
-    </div>
+  </div>
+  <div class="hero-cta-bar">
+    <a href="tel:9787648031" class="btn btn-gold">Call (978) 764-8031</a>
+    <a href="#machines" class="btn btn-outline">View Our Machines</a>
   </div>
 </section>
 
