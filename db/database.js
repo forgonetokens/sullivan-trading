@@ -150,6 +150,61 @@ function getRecentInvoices(limit = 10) {
   return getDb().prepare('SELECT * FROM invoices ORDER BY id DESC LIMIT ?').all(limit);
 }
 
+// --- Post helpers ---
+
+function createPost({ title, slug, excerpt, body, status }) {
+  const db = getDb();
+  const published_at = status === 'published' ? new Date().toISOString() : null;
+  const result = db.prepare(`
+    INSERT INTO posts (title, slug, excerpt, body, status, published_at)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `).run(title, slug, excerpt || null, body || null, status || 'draft', published_at);
+  return result.lastInsertRowid;
+}
+
+function updatePost(id, { title, slug, excerpt, body, status }) {
+  const db = getDb();
+  const existing = db.prepare('SELECT status, published_at FROM posts WHERE id = ?').get(id);
+  let published_at = existing ? existing.published_at : null;
+  if (status === 'published' && !published_at) {
+    published_at = new Date().toISOString();
+  }
+  if (status === 'draft') {
+    published_at = null;
+  }
+  db.prepare(`
+    UPDATE posts SET title = ?, slug = ?, excerpt = ?, body = ?, status = ?,
+      updated_at = datetime('now'), published_at = ?
+    WHERE id = ?
+  `).run(title, slug, excerpt || null, body || null, status || 'draft', published_at, id);
+}
+
+function deletePost(id) {
+  getDb().prepare('DELETE FROM posts WHERE id = ?').run(id);
+}
+
+function getPost(id) {
+  return getDb().prepare('SELECT * FROM posts WHERE id = ?').get(id);
+}
+
+function getPostBySlug(slug) {
+  return getDb().prepare('SELECT * FROM posts WHERE slug = ? AND status = ?').get(slug, 'published');
+}
+
+function listPosts() {
+  return getDb().prepare('SELECT * FROM posts ORDER BY id DESC').all();
+}
+
+function listPublishedPosts(limit) {
+  let sql = 'SELECT * FROM posts WHERE status = ? ORDER BY published_at DESC';
+  const params = ['published'];
+  if (limit) {
+    sql += ' LIMIT ?';
+    params.push(limit);
+  }
+  return getDb().prepare(sql).all(...params);
+}
+
 module.exports = {
   getDb,
   nextInvoiceNumber,
@@ -163,4 +218,11 @@ module.exports = {
   markOverdueInvoices,
   getDashboardStats,
   getRecentInvoices,
+  createPost,
+  updatePost,
+  deletePost,
+  getPost,
+  getPostBySlug,
+  listPosts,
+  listPublishedPosts,
 };

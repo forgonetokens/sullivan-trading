@@ -136,6 +136,80 @@ router.post('/invoices', requireAuth, async (req, res) => {
   }
 });
 
+// --- Blog Posts ---
+
+function slugify(text) {
+  return text.toString().toLowerCase().trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+router.get('/posts', requireAuth, (req, res) => {
+  const posts = db.listPosts();
+  res.render('admin/posts', {
+    posts,
+    success: req.session.flash_success,
+    error: req.session.flash_error,
+  });
+  delete req.session.flash_success;
+  delete req.session.flash_error;
+});
+
+router.get('/posts/new', requireAuth, (req, res) => {
+  res.render('admin/post-form', { post: null, error: null });
+});
+
+router.post('/posts', requireAuth, (req, res) => {
+  try {
+    const { title, slug, excerpt, body, status } = req.body;
+    if (!title) {
+      return res.render('admin/post-form', { post: req.body, error: 'Title is required.' });
+    }
+    const finalSlug = slug ? slugify(slug) : slugify(title);
+    db.createPost({ title, slug: finalSlug, excerpt, body, status: status || 'draft' });
+    req.session.flash_success = `Post "${title}" created.`;
+    res.redirect('/admin/posts');
+  } catch (err) {
+    if (err.message && err.message.includes('UNIQUE constraint')) {
+      return res.render('admin/post-form', { post: req.body, error: 'A post with that slug already exists.' });
+    }
+    res.render('admin/post-form', { post: req.body, error: err.message });
+  }
+});
+
+router.get('/posts/:id/edit', requireAuth, (req, res) => {
+  const post = db.getPost(req.params.id);
+  if (!post) {
+    req.session.flash_error = 'Post not found.';
+    return res.redirect('/admin/posts');
+  }
+  res.render('admin/post-form', { post, error: null });
+});
+
+router.post('/posts/:id', requireAuth, (req, res) => {
+  try {
+    const { title, slug, excerpt, body, status } = req.body;
+    if (!title) {
+      return res.render('admin/post-form', { post: { ...req.body, id: req.params.id }, error: 'Title is required.' });
+    }
+    const finalSlug = slug ? slugify(slug) : slugify(title);
+    db.updatePost(req.params.id, { title, slug: finalSlug, excerpt, body, status: status || 'draft' });
+    req.session.flash_success = `Post "${title}" updated.`;
+    res.redirect('/admin/posts');
+  } catch (err) {
+    if (err.message && err.message.includes('UNIQUE constraint')) {
+      return res.render('admin/post-form', { post: { ...req.body, id: req.params.id }, error: 'A post with that slug already exists.' });
+    }
+    res.render('admin/post-form', { post: { ...req.body, id: req.params.id }, error: err.message });
+  }
+});
+
+router.post('/posts/:id/delete', requireAuth, (req, res) => {
+  db.deletePost(req.params.id);
+  req.session.flash_success = 'Post deleted.';
+  res.redirect('/admin/posts');
+});
+
 // --- Invoice Detail ---
 router.get('/invoices/:id', requireAuth, (req, res) => {
   const invoice = db.getInvoice(req.params.id);

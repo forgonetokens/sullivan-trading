@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const { getDb } = require('./db/database');
+const db_helpers = require('./db/database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // ── Session store (SQLite) ──
 const SqliteStore = require('better-sqlite3-session-store')(session);
-const db = getDb();
+const db = db_helpers.getDb();
 
 app.use(session({
   store: new SqliteStore({
@@ -45,6 +45,16 @@ app.use(session({
 
 // ── Static files (public site) ──
 app.use(express.static(path.join(__dirname, 'public')));
+
+// ── Homepage route (EJS with blog teasers) ──
+app.get('/', (req, res) => {
+  const posts = db_helpers.listPublishedPosts(3);
+  res.render('public/index', { posts });
+});
+
+// ── Blog routes ──
+const blogRoutes = require('./routes/blog');
+app.use('/blog', blogRoutes);
 
 // ── Admin routes ──
 const adminRoutes = require('./routes/admin');

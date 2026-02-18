@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/public-head') %>
+  <title>Blog — Sullivan Trading Company</title>
+  <meta name="description" content="News, tips, and stories from Sullivan Trading Company — can seamer sales, parts, and repairs.">
+  <style>
+    .blog-wrap{max-width:800px;margin:0 auto;padding:6rem 2rem 4rem}
+    .blog-grid{display:grid;gap:1.5rem;margin-top:2rem}
+    .blog-card{
+      background:var(--navy-light);border:1px solid var(--rule-solid);
+      padding:1.75rem;transition:border-color .2s;display:block;text-decoration:none;
+      position:relative;overflow:hidden;
+    }
+    .blog-card::before{
+      content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+      background:var(--gold-dim);opacity:0;transition:opacity .2s;
+    }
+    .blog-card:hover{border-color:var(--gold-dim)}
+    .blog-card:hover::before{opacity:1}
+    .blog-card h2{
+      font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:600;
+      color:var(--cream);margin-bottom:.4rem;letter-spacing:.03em;text-transform:uppercase;
+    }
+    .blog-card .blog-date{
+      font-family:'Source Code Pro',monospace;font-size:.7rem;
+      color:var(--fog);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem;
+    }
+    .blog-card p{font-size:.9rem;color:var(--fog);line-height:1.7}
+    .blog-card .read-more{
+      display:inline-block;margin-top:.75rem;
+      font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:500;
+      color:var(--gold);letter-spacing:.08em;text-transform:uppercase;
+    }
+    @media(max-width:768px){
+      .blog-wrap{padding:4.5rem 1.25rem 3rem}
+    }
+  </style>
+</head>
+<body>
+  <%- include('../partials/public-nav') %>
+
+  <div class="blog-wrap">
+    <div class="section-label">From The Shop</div>
+    <h1 class="section-title">Blog</h1>
+    <p class="section-intro">News, tips, and stories from the world of can seamers.</p>
+
+    <div class="blog-grid">
+      <% if (posts.length === 0) { %>
+        <p style="color: var(--fog); font-style: italic; margin-top: 1rem;">No posts yet. Check back soon.</p>
+      <% } else { %>
+        <% posts.forEach(post => { %>
+          <a href="/blog/<%= post.slug %>" class="blog-card">
+            <h2><%= post.title %></h2>
+            <div class="blog-date"><%= new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></div>
+            <% if (post.excerpt) { %>
+              <p><%= post.excerpt %></p>
+            <% } %>
+            <span class="read-more">Read More &rarr;</span>
+          </a>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+
+  <%- include('../partials/public-footer') %>
+</body>
+</html>

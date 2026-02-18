@@ -23,3 +23,15 @@ CREATE TABLE IF NOT EXISTS invoice_line_items (
   quantity INTEGER NOT NULL DEFAULT 1,
   unit_price_cents INTEGER NOT NULL DEFAULT 0
 );
+
+CREATE TABLE IF NOT EXISTS posts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  slug TEXT NOT NULL UNIQUE,
+  excerpt TEXT,
+  body TEXT,
+  status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft','published')),
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  published_at TEXT
+);

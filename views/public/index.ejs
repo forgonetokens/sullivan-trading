@@ -1,67 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('../partials/public-head') %>
   <title>Sullivan Trading Company — Can Seamer Sales, Parts & Repairs</title>
   <meta name="description" content="Sullivan Trading Company specializes in can seamer sales, rebuilds, parts, and repairs. American Can, Continental, Angelus, Dixie, and Rooney seamers. 20+ years experience.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Stencil+One&family=Oswald:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    :root{
-      --navy:#0f1a2e;
-      --navy-light:#162240;
-      --navy-mid:#1c2d4f;
-      --slate:#2a3a5c;
-      --gold:#c9a84c;
-      --gold-dim:#a68a3a;
-      --gold-bright:#e2c465;
-      --cream:#e8dcc8;
-      --cream-dim:#bfb49e;
-      --fog:#7a899e;
-      --rule:rgba(201,168,76,0.2);
-      --rule-solid:#3a4a6c;
-    }
-    html{scroll-behavior:smooth}
-    body{
-      font-family:'Libre Baskerville','Georgia',serif;
-      background:var(--navy);
-      color:var(--cream);
-      line-height:1.7;
-    }
-
-    /* ── subtle grain overlay on whole page ── */
-    body::after{
-      content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
-      opacity:0.035;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23g)'/%3E%3C/svg%3E");
-      background-size:200px 200px;
-    }
-
-    /* ── NAV ── */
-    nav{
-      position:fixed;top:0;left:0;right:0;z-index:100;
-      background:rgba(15,26,46,0.95);backdrop-filter:blur(10px);
-      border-bottom:1px solid var(--rule-solid);
-      padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;
-    }
-    .nav-logo{
-      font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;
-      color:var(--gold);text-decoration:none;letter-spacing:.15em;text-transform:uppercase;
-    }
-    .nav-links{display:flex;gap:1.75rem;list-style:none}
-    .nav-links a{
-      color:var(--fog);text-decoration:none;
-      font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:500;
-      letter-spacing:.1em;text-transform:uppercase;transition:color .2s;
-    }
-    .nav-links a:hover{color:var(--gold)}
-    .nav-phone{
-      font-family:'Source Code Pro',monospace;color:var(--gold);font-weight:600;font-size:.85rem;text-decoration:none;
-    }
-
     /* ── HERO ── */
     .hero{
       min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -92,7 +35,7 @@
       font-family:'Libre Baskerville',serif;font-style:italic;
       font-size:clamp(1.2rem,3vw,2rem);font-weight:400;
       color:var(--gold);letter-spacing:.02em;text-transform:none;
-      margin-top:.5rem;
+      margin-top:1.25rem;
     }
     .hero-rule{
       width:80px;height:1px;background:var(--gold-dim);margin:2rem auto;
@@ -107,36 +50,6 @@
       padding:1rem 2rem;border:1px solid var(--rule);
     }
     .hero-cta{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
-    .btn{
-      display:inline-block;padding:.85rem 2.25rem;
-      font-family:'Oswald',sans-serif;font-weight:600;font-size:.85rem;
-      letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
-      border:none;cursor:pointer;transition:all .25s;
-    }
-    .btn-gold{background:var(--gold);color:var(--navy)}
-    .btn-gold:hover{background:var(--gold-bright)}
-    .btn-outline{background:transparent;color:var(--cream-dim);border:1.5px solid var(--slate)}
-    .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
-
-    /* ── SECTIONS ── */
-    section{padding:5rem 2rem}
-    .container{max-width:960px;margin:0 auto}
-    .section-label{
-      font-family:'Source Code Pro',monospace;font-size:.7rem;font-weight:500;
-      text-transform:uppercase;letter-spacing:.3em;color:var(--gold-dim);margin-bottom:.5rem;
-    }
-    .section-title{
-      font-family:'Oswald',sans-serif;font-size:clamp(2rem,5vw,3.25rem);
-      font-weight:700;color:var(--cream);line-height:1.05;letter-spacing:.04em;
-      text-transform:uppercase;margin-bottom:.75rem;
-    }
-    .section-intro{
-      font-size:1rem;color:var(--fog);max-width:580px;line-height:1.7;font-style:italic;
-    }
-    .sec-alt{background:var(--navy-light)}
-
-    /* gold divider between sections */
-    .gold-rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);margin:0 auto;max-width:200px}
 
     /* ── MACHINES ── */
     .machine-grid{
@@ -197,16 +110,30 @@
     .rebuild-step p{font-size:.9rem;color:var(--fog)}
 
     /* ── INVENTORY ── */
-    .inventory-list{
-      display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-      gap:.5rem;margin-top:2rem;
+    .inventory-grid{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+      gap:1.25rem;margin-top:2.5rem;
     }
-    .inventory-item{
-      font-family:'Source Code Pro',monospace;font-size:.8rem;
-      color:var(--cream-dim);padding:.65rem .75rem;
-      border-bottom:1px solid var(--rule-solid);transition:color .2s;
+    .inventory-card{
+      background:var(--navy);border:1px solid var(--rule-solid);
+      overflow:hidden;transition:border-color .2s;
     }
-    .inventory-item:hover{color:var(--gold)}
+    .inventory-card:hover{border-color:var(--gold-dim)}
+    .inventory-card img{
+      width:100%;aspect-ratio:4/5;object-fit:cover;display:block;
+      filter:brightness(.9);transition:filter .3s;
+    }
+    .inventory-card:hover img{filter:brightness(1)}
+    .inventory-card-info{padding:1rem 1.25rem}
+    .inventory-card-info h3{
+      font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;
+      color:var(--cream);letter-spacing:.04em;text-transform:uppercase;
+      margin-bottom:.2rem;
+    }
+    .inventory-card-info p{
+      font-family:'Source Code Pro',monospace;font-size:.7rem;
+      color:var(--fog);letter-spacing:.05em;text-transform:uppercase;
+    }
 
     /* ── PARTS ── */
     .parts-columns{
@@ -233,6 +160,37 @@
     }
     .faq-a{font-size:.9rem;color:var(--fog);max-width:680px;line-height:1.7}
 
+    /* ── BLOG TEASERS ── */
+    .blog-teaser-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:1.25rem;margin-top:2.5rem;
+    }
+    .blog-teaser-card{
+      background:var(--navy);border:1px solid var(--rule-solid);
+      padding:1.75rem;transition:border-color .2s;display:block;
+      text-decoration:none;position:relative;overflow:hidden;
+    }
+    .blog-teaser-card::before{
+      content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+      background:var(--gold-dim);opacity:0;transition:opacity .2s;
+    }
+    .blog-teaser-card:hover{border-color:var(--gold-dim)}
+    .blog-teaser-card:hover::before{opacity:1}
+    .blog-teaser-card h3{
+      font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;
+      color:var(--cream);margin-bottom:.3rem;letter-spacing:.03em;text-transform:uppercase;
+    }
+    .blog-teaser-card .teaser-date{
+      font-family:'Source Code Pro',monospace;font-size:.65rem;
+      color:var(--fog);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;
+    }
+    .blog-teaser-card p{font-size:.88rem;color:var(--fog);line-height:1.6}
+    .blog-teaser-card .teaser-link{
+      display:inline-block;margin-top:.6rem;
+      font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:500;
+      color:var(--gold);letter-spacing:.08em;text-transform:uppercase;
+    }
+
     /* ── CONTACT ── */
     #contact{text-align:center;padding:5rem 2rem}
     .contact-phone{
@@ -243,19 +201,7 @@
     .contact-phone:hover{color:var(--gold-bright)}
     .contact-details{margin-top:2rem;font-size:.95rem;color:var(--fog)}
 
-    /* ── FOOTER ── */
-    footer{
-      border-top:1px solid var(--rule-solid);padding:2rem;text-align:center;
-      font-size:.8rem;color:var(--fog);font-style:italic;
-    }
-
-    /* ── MOBILE ── */
-    .mobile-menu-btn{display:none;background:none;border:none;color:var(--cream);font-size:1.4rem;cursor:pointer}
     @media(max-width:768px){
-      .nav-links{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--navy);border-bottom:1px solid var(--rule-solid);padding:1.25rem 2rem;gap:1rem}
-      .nav-phone{display:none}
-      .mobile-menu-btn{display:block}
-      section{padding:3rem 1.25rem}
       .rebuild-step{flex-direction:column;gap:.5rem}
       .step-num{font-size:1.6rem}
     }
@@ -263,20 +209,7 @@
 </head>
 <body>
 
-<nav>
-  <a href="#" class="nav-logo">Sullivan Trading Co.</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#machines">Machines</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#rebuilds">Rebuilds</a></li>
-    <li><a href="#inventory">Inventory</a></li>
-    <li><a href="#parts">Parts</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="tel:9787648031" class="nav-phone">(978) 764-8031</a>
-  <button class="mobile-menu-btn" onclick="const n=document.getElementById('navLinks');n.style.display=n.style.display==='flex'?'none':'flex'">&#9776;</button>
-</nav>
+<%- include('../partials/public-nav') %>
 
 <section class="hero">
   <img src="/images/logo.png" alt="Sullivan Trading Company Logo" class="hero-logo">
@@ -353,19 +286,18 @@
     <div class="section-label">Current Stock</div>
     <h2 class="section-title">Machine Inventory</h2>
     <p class="section-intro">We maintain a rotating stock and are always buying more. Have a machine to sell or trade? Contact us.</p>
-    <div class="inventory-list">
-      <div class="inventory-item">2006-4 (6 Head)</div>
-      <div class="inventory-item">2004 (4 Head)</div>
-      <div class="inventory-item">Angelus 29-P</div>
-      <div class="inventory-item">Angelus 60L</div>
-      <div class="inventory-item">Canco 006 Vacuum</div>
-      <div class="inventory-item">Canco 08-C Vacuum</div>
-      <div class="inventory-item">HO Lab Seamer</div>
-      <div class="inventory-item">Number 1 Pacific</div>
-      <div class="inventory-item">Canco No. 1 Western</div>
-      <div class="inventory-item">Canco No. 2 Type A</div>
-      <div class="inventory-item">Labeler</div>
-      <div class="inventory-item">Rooney Semi-Auto</div>
+    <div class="inventory-grid">
+      <div class="inventory-card"><img src="/images/machines/PS_2004.jpg" alt="Pneumatic Scale 2004" loading="lazy"><div class="inventory-card-info"><h3>Pneumatic Scale 2004</h3><p>4 Head &bull; RCC-1C</p></div></div>
+      <div class="inventory-card"><img src="/images/machines/Angeles_29P.jpg" alt="Angelus 29-P" loading="lazy"><div class="inventory-card-info"><h3>Angelus 29-P</h3><p>Mach #3112741</p></div></div>
+      <div class="inventory-card"><img src="/images/machines/Angeles_60L.jpg" alt="Angelus 60L" loading="lazy"><div class="inventory-card-info"><h3>Angelus 60L</h3><p>Can Seamer</p></div></div>
+      <div class="inventory-card"><img src="/images/machines/Canco_06_Vac.jpg" alt="Canco 06 Vacuum" loading="lazy"><div class="inventory-card-info"><h3>Canco 06 Vacuum</h3><p>Vacuum Seamer</p></div></div>
+      <div class="inventory-card"><img src="/images/machines/canco_08-C_Vac.jpg" alt="Canco 08-C Vacuum" loading="lazy"><div class="inventory-card-info"><h3>Canco 08-C Vacuum</h3><p>Mach #38322</p></div></div>
+      <div class="inventory-card"><img src="/images/machines/Canco_HO_LabSeamer.jpg" alt="HO Lab Seamer" loading="lazy"><div class="inventory-card-info"><h3>HO Lab Seamer</h3><p>Lab / R&amp;D</p></div></div>
+      <div class="inventory-card"><img src="/images/machines/Canco_No1_Pacific.jpg" alt="Canco No. 1 Pacific" loading="lazy"><div class="inventory-card-info"><h3>Canco No. 1 Pacific</h3><p>Can Seamer</p></div></div>
+      <div class="inventory-card"><img src="/images/machines/Canco_No1_Western.jpg" alt="Canco No. 1 Western" loading="lazy"><div class="inventory-card-info"><h3>Canco No. 1 Western</h3><p>Can Seamer</p></div></div>
+      <div class="inventory-card"><img src="/images/machines/Canco_No2_TypeA.jpg" alt="Canco No. 2 Type A" loading="lazy"><div class="inventory-card-info"><h3>Canco No. 2 Type A</h3><p>Can Seamer</p></div></div>
+      <div class="inventory-card"><img src="/images/machines/Canco_Rooney.jpg" alt="Rooney Semi-Auto" loading="lazy"><div class="inventory-card-info"><h3>Rooney Semi-Auto</h3><p>Semi-Automatic</p></div></div>
+      <div class="inventory-card"><img src="/images/machines/labeler.jpg" alt="Labeler" loading="lazy"><div class="inventory-card-info"><h3>Labeler</h3><p>Can Labeler</p></div></div>
     </div>
     <p style="color:var(--fog);font-size:.85rem;margin-top:1.5rem;font-style:italic">Don&rsquo;t see what you need? Call us &mdash; we may have it or can source it.</p>
   </div>
@@ -398,6 +330,33 @@
   </div>
 </section>
 
+<% if (posts && posts.length > 0) { %>
+<div class="gold-rule"></div>
+
+<section id="blog" class="sec-alt">
+  <div class="container">
+    <div class="section-label">From The Shop</div>
+    <h2 class="section-title">Latest Posts</h2>
+    <p class="section-intro">News, tips, and stories from the world of can seamers.</p>
+    <div class="blog-teaser-grid">
+      <% posts.forEach(post => { %>
+        <a href="/blog/<%= post.slug %>" class="blog-teaser-card">
+          <h3><%= post.title %></h3>
+          <div class="teaser-date"><%= new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></div>
+          <% if (post.excerpt) { %>
+            <p><%= post.excerpt %></p>
+          <% } %>
+          <span class="teaser-link">Read More &rarr;</span>
+        </a>
+      <% }) %>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="/blog" class="btn btn-outline">View All Posts</a>
+    </div>
+  </div>
+</section>
+<% } %>
+
 <div class="gold-rule"></div>
 
 <section id="contact">
@@ -415,9 +374,7 @@
   </div>
 </section>
 
-<footer>
-  <p>&copy; 2026 Sullivan Trading Company, Inc. &mdash; Can Seamer Sales, Parts &amp; Repairs</p>
-</footer>
+<%- include('../partials/public-footer') %>
 
 </body>
 </html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/public-head') %>
+  <title><%= post.title %> — Sullivan Trading Company</title>
+  <meta name="description" content="<%= post.excerpt || post.title %>">
+  <style>
+    .post-wrap{max-width:720px;margin:0 auto;padding:6rem 2rem 4rem}
+    .post-meta{
+      font-family:'Source Code Pro',monospace;font-size:.7rem;
+      color:var(--fog);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;
+    }
+    .post-title{
+      font-family:'Oswald',sans-serif;font-size:clamp(2rem,5vw,3rem);
+      font-weight:700;color:var(--cream);line-height:1.1;letter-spacing:.03em;
+      text-transform:uppercase;margin-bottom:.5rem;
+    }
+    .post-body{margin-top:2rem;line-height:1.8;color:var(--cream-dim)}
+    .post-body h1,.post-body h2,.post-body h3,.post-body h4{
+      font-family:'Oswald',sans-serif;font-weight:600;color:var(--cream);
+      text-transform:uppercase;letter-spacing:.03em;margin:2rem 0 .75rem;
+    }
+    .post-body h1{font-size:1.8rem}
+    .post-body h2{font-size:1.5rem}
+    .post-body h3{font-size:1.2rem}
+    .post-body p{margin-bottom:1.25rem}
+    .post-body a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+    .post-body a:hover{color:var(--gold-bright)}
+    .post-body ul,.post-body ol{margin:1rem 0 1.25rem 1.5rem;color:var(--fog)}
+    .post-body li{margin-bottom:.4rem}
+    .post-body blockquote{
+      border-left:3px solid var(--gold-dim);margin:1.5rem 0;padding:.75rem 1.25rem;
+      color:var(--fog);font-style:italic;background:var(--navy-light);
+    }
+    .post-body code{
+      font-family:'Source Code Pro',monospace;font-size:.85em;
+      background:var(--navy-light);padding:.15rem .4rem;border:1px solid var(--rule-solid);
+      color:var(--gold);
+    }
+    .post-body pre{
+      background:var(--navy-light);border:1px solid var(--rule-solid);
+      padding:1.25rem;overflow-x:auto;margin:1.5rem 0;
+    }
+    .post-body pre code{
+      background:none;border:none;padding:0;color:var(--cream-dim);
+      font-size:.85rem;line-height:1.6;
+    }
+    .post-body img{max-width:100%;height:auto;margin:1.5rem 0;border:1px solid var(--rule-solid)}
+    .post-body hr{border:none;height:1px;background:var(--rule-solid);margin:2rem 0}
+    .post-back{
+      display:inline-block;margin-top:3rem;
+      font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:500;
+      color:var(--gold);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;
+    }
+    .post-back:hover{color:var(--gold-bright)}
+    @media(max-width:768px){
+      .post-wrap{padding:4.5rem 1.25rem 3rem}
+    }
+  </style>
+</head>
+<body>
+  <%- include('../partials/public-nav') %>
+
+  <div class="post-wrap">
+    <div class="post-meta"><%= new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></div>
+    <h1 class="post-title"><%= post.title %></h1>
+    <div class="gold-rule" style="margin:1.5rem 0;max-width:80px"></div>
+    <div class="post-body">
+      <%- post.bodyHtml %>
+    </div>
+    <a href="/blog" class="post-back">&larr; Back to Blog</a>
+  </div>
+
+  <%- include('../partials/public-footer') %>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/admin-head') %>
+  <title>Blog Posts — Sullivan Trading Admin</title>
+</head>
+<body>
+  <%- include('../partials/admin-nav') %>
+  <div class="admin-wrap">
+    <%- include('../partials/admin-flash') %>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <h1 class="page-title" style="margin-bottom: 0;">Blog Posts</h1>
+      <a href="/admin/posts/new" class="btn btn-gold">New Post</a>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Slug</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (posts.length === 0) { %>
+            <tr><td colspan="5" style="text-align: center; color: var(--fog); padding: 2rem;">No posts yet. Create your first one.</td></tr>
+          <% } else { %>
+            <% posts.forEach(post => { %>
+              <tr>
+                <td><%= post.title %></td>
+                <td style="font-family: 'Source Code Pro', monospace; font-size: .8rem; color: var(--fog);"><%= post.slug %></td>
+                <td><span class="badge badge-<%= post.status === 'published' ? 'paid' : 'draft' %>"><%= post.status %></span></td>
+                <td style="font-family: 'Source Code Pro', monospace; font-size: .75rem; color: var(--fog);"><%= (post.published_at || post.created_at).split('T')[0] || (post.published_at || post.created_at).split(' ')[0] %></td>
+                <td style="display: flex; gap: .5rem;">
+                  <% if (post.status === 'published') { %>
+                    <a href="/blog/<%= post.slug %>" target="_blank" class="btn btn-outline btn-sm">View</a>
+                  <% } %>
+                  <a href="/admin/posts/<%= post.id %>/edit" class="btn btn-outline btn-sm">Edit</a>
+                  <form method="POST" action="/admin/posts/<%= post.id %>/delete" style="margin: 0;" onsubmit="return confirm('Delete this post?')">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
