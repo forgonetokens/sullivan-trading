@@ -54,6 +54,9 @@
 
       <div style="display: flex; gap: 1rem; margin-top: 1rem;">
         <button type="submit" class="btn btn-gold"><%= post && post.id ? 'Update' : 'Create' %> Post</button>
+        <% if (post && post.id) { %>
+          <a href="/admin/posts/<%= post.id %>/preview" target="_blank" class="btn btn-outline">Preview</a>
+        <% } %>
         <a href="/admin/posts" class="btn btn-outline">Cancel</a>
       </div>
     </form>

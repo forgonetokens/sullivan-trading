@@ -213,6 +213,18 @@ router.post('/posts/:id', requireAuth, (req, res) => {
   }
 });
 
+router.get('/posts/:id/preview', requireAuth, (req, res) => {
+  const { marked } = require('marked');
+  const post = db.getPost(req.params.id);
+  if (!post) {
+    req.session.flash_error = 'Post not found.';
+    return res.redirect('/admin/posts');
+  }
+  post.bodyHtml = marked(post.body || '');
+  post.published_at = post.published_at || new Date().toISOString();
+  res.render('blog/post', { post });
+});
+
 router.post('/posts/:id/delete', requireAuth, (req, res) => {
   db.deletePost(req.params.id);
   req.session.flash_success = 'Post deleted.';
