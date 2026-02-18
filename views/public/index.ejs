@@ -7,18 +7,30 @@
   <style>
     /* ── HERO ── */
     .hero{
-      min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-      text-align:center;padding:6rem 2rem 4rem;position:relative;
-      background:
-        radial-gradient(ellipse at 50% 30%, var(--navy-light) 0%, var(--navy) 70%);
+      position:relative;overflow:hidden;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;
+    }
+    .hero-video{
+      display:block;width:100%;height:auto;
+    }
+    .hero-overlay{
+      position:absolute;inset:0;
+      background:rgba(10,15,30,0.55);
+      z-index:1;
     }
     /* subtle cross-hatch pattern */
-    .hero::before{
+    .hero-overlay::after{
       content:'';position:absolute;inset:0;pointer-events:none;
       opacity:0.04;
       background-image:
         repeating-linear-gradient(45deg,transparent,transparent 10px,var(--cream) 10px,var(--cream) 10.5px),
         repeating-linear-gradient(-45deg,transparent,transparent 10px,var(--cream) 10px,var(--cream) 10.5px);
+    }
+    .hero-content{
+      position:absolute;inset:0;z-index:2;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:6rem 2rem 4rem;
     }
     .hero-logo{width:160px;margin-bottom:1.5rem;opacity:.85}
     .hero-est{
@@ -202,6 +214,12 @@
     .contact-details{margin-top:2rem;font-size:.95rem;color:var(--fog)}
 
     @media(max-width:768px){
+      .hero{height:70vh}
+      .hero-video{
+        position:absolute;inset:0;width:100%;height:100%;
+        object-fit:cover;
+      }
+      .hero-content{padding:4rem 1.5rem 3rem}
       .rebuild-step{flex-direction:column;gap:.5rem}
       .step-num{font-size:1.6rem}
     }
@@ -212,17 +230,23 @@
 <%- include('../partials/public-nav') %>
 
 <section class="hero">
-  <img src="/images/logo.png" alt="Sullivan Trading Company Logo" class="hero-logo">
-  <div class="hero-est">Elmira, New York &mdash; Est. 20+ Years</div>
-  <h1>SULLIVAN<br>TRADING CO.
-    <span>Can Seamer Sales, Parts &amp; Repairs</span>
-  </h1>
-  <div class="hero-rule"></div>
-  <p class="hero-tagline">Over twenty years rebuilding American closing machines. Rebuilt to factory specification or better.</p>
-  <div class="hero-quote">&ldquo;You write the check and we&rsquo;ll can the Statue of Liberty.&rdquo;</div>
-  <div class="hero-cta">
-    <a href="tel:9787648031" class="btn btn-gold">Call (978) 764-8031</a>
-    <a href="#machines" class="btn btn-outline">View Our Machines</a>
+  <video class="hero-video" autoplay muted loop playsinline poster="/videos/hero-canco-06-poster.jpg">
+    <source src="/videos/hero-canco-06.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <img src="/images/logo.png" alt="Sullivan Trading Company Logo" class="hero-logo">
+    <div class="hero-est">Elmira, New York &mdash; Est. 20+ Years</div>
+    <h1>SULLIVAN<br>TRADING CO.
+      <span>Can Seamer Sales, Parts &amp; Repairs</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline">Over twenty years rebuilding American closing machines. Rebuilt to factory specification or better.</p>
+    <div class="hero-quote">&ldquo;You write the check and we&rsquo;ll can the Statue of Liberty.&rdquo;</div>
+    <div class="hero-cta">
+      <a href="tel:9787648031" class="btn btn-gold">Call (978) 764-8031</a>
+      <a href="#machines" class="btn btn-outline">View Our Machines</a>
+    </div>
   </div>
 </section>
 
