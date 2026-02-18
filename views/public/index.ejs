@@ -19,14 +19,6 @@
       background:rgba(10,15,30,0.55);
       z-index:1;
     }
-    /* subtle cross-hatch pattern */
-    .hero-overlay::after{
-      content:'';position:absolute;inset:0;pointer-events:none;
-      opacity:0.04;
-      background-image:
-        repeating-linear-gradient(45deg,transparent,transparent 10px,var(--cream) 10px,var(--cream) 10.5px),
-        repeating-linear-gradient(-45deg,transparent,transparent 10px,var(--cream) 10px,var(--cream) 10.5px);
-    }
     .hero-content{
       position:absolute;inset:0;z-index:2;
       display:flex;flex-direction:column;align-items:center;justify-content:center;
