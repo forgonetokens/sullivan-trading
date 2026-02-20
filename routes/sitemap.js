@@ -30,11 +30,8 @@ router.get('/sitemap.xml', (req, res) => {
   }
 
   for (const post of posts) {
-    const lastmod = post.updated_at
-      ? post.updated_at.split('T')[0]
-      : post.published_at
-        ? post.published_at.split('T')[0]
-        : today;
+    const rawDate = post.updated_at || post.published_at || today;
+    const lastmod = rawDate.split(/[T ]/)[0];
     xml += `  <url>
     <loc>${SITE_URL}/blog/${post.slug}</loc>
     <lastmod>${lastmod}</lastmod>
