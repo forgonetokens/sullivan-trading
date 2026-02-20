@@ -73,8 +73,9 @@ app.use('/blog', blogRoutes);
 const adminRoutes = require('./routes/admin');
 app.use('/admin', adminRoutes);
 
-// ── Redirects ──
-app.get('/replacement-manual-prints', (req, res) => res.redirect('/#manuals'));
+// ── SEO: sitemap, robots.txt, old-URL redirects ──
+const sitemapRoutes = require('./routes/sitemap');
+app.use(sitemapRoutes);
 
 // ── Health check (for Railway) ──
 app.get('/health', (req, res) => res.send('ok'));
